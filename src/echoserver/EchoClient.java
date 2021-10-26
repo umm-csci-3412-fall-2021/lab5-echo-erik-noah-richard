@@ -22,17 +22,22 @@ public class EchoClient {
         InputStream input = socket.getInputStream();
         OutputStream output = socket.getOutputStream();
 
+        // Read the input from the user and send it to the server,
+        // Read the output from the server and send it to the user.
         int userInput = System.in.read();
         while(userInput != -1) {
             output.write(userInput);
-            userInput = System.in.read();
             int serverInput = input.read();
             System.out.write(serverInput);
-            serverInput = input.read();
+            userInput = System.in.read();
         }
-        
 
-        // Close the socket when we're done reading from it
+        // Flush everything
+        output.flush();
+        System.out.flush();
+
+        // Close the socket
+        socket.shutdownOutput();
         socket.close();
 
         // Provide some minimal error handling.
