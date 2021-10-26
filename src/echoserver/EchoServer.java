@@ -15,7 +15,7 @@ public class EchoServer {
             // Wait until someone connects, thereby requesting a date
             Socket client = sock.accept();
 
-            //Create the input/output streams
+            // Create the input/output streams
             InputStream in = client.getInputStream();
             OutputStream out = client.getOutputStream();
             
@@ -31,9 +31,7 @@ public class EchoServer {
             out.flush();
         
             // Close the client socket since we're done.
-            in.close();
-            out.close();
-            client.close();
+            client.shutdownOutput();
         }
         // *Very* minimal error handling.
         } catch (IOException ioe) {
